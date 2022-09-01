@@ -19,6 +19,6 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         Mahasiswa::factory(20)->create();
         MataKuliah::factory(30)->create();
-        Krs::factory(50)->create()->unique(true);
+        Krs::factory(50)->create();
     }
 }
