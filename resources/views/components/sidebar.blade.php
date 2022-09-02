@@ -12,9 +12,11 @@
             class="fas fa-fire"></i><span>Dashboard</span></a>
       </li>
       <li class="menu-header">Administrator</li>
-      <li class="{{ request()->routeIs('dashboard.user.*') ? 'active' : '' }}"><a
-          href="" class="nav-link"><i class="far fa-user"></i><span> Data
-            User</span></a>
+      <li class="{{ request()->routeIs('dashboard.mahasiswa.*') ? 'active' : '' }}"><a
+          href="{{ route('dashboard.mahasiswa.index') }}" class="nav-link"><i class="far fa-user"></i><span>Data Mahasiswa</span></a>
+      </li>
+      <li class="{{ request()->routeIs('dashboard.matkul.*') ? 'active' : '' }}"><a
+          href="{{ route('dashboard.matkul.index') }}" class="nav-link"><i class="fas fa-book"></i><span>Data Mata Kuliah</span></a>
       </li>
     </ul>
   </aside>

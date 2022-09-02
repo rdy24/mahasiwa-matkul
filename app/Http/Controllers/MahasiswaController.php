@@ -46,7 +46,8 @@ class MahasiswaController extends Controller
 
     if(!$existEmail) {
       $this->validate($request, [
-        'email' => 'unique:users'
+        'email' => 'unique:users',
+        'password' => 'required|min:6',
       ]);
       $user = new User();
       $user->email = $data['email'];
@@ -98,8 +99,9 @@ class MahasiswaController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Mahasiswa $mahasiswa)
+  public function update(MahasiswaRequest $request, Mahasiswa $mahasiswa)
   {
+    $data = $request->all();
     $user_id = User::find($mahasiswa->user_id);
 
     if($request->email != $user_id->email) {
@@ -114,10 +116,10 @@ class MahasiswaController extends Controller
       ]);
     }
 
-    $user = new User();
-    $user->email = $data['email'];
-    $user->password = Hash::make($data['password']);
-    // $user_id->update($user); 
+    $user_id->update([
+      'email' => $data['email'],
+      'password' => Hash::make($data['password'])
+    ]); 
 
     if($request->nim != $mahasiswa->nim) {
       $this->validate($request, [
@@ -125,14 +127,13 @@ class MahasiswaController extends Controller
       ]);
     }
 
-    $mahasiswaData = new Mahasiswa();
-    $mahasiswaData->nim = $data['nim'];
-    $mahasiswaData->nama = $data['nama'];
-    $mahasiswaData->alamat = $data['alamat'];
-    $mahasiswaData->jenis_kelamin = $data['jenis_kelamin'];
-    $mahasiswaData->tanggal_lahir = $data['tanggal_lahir'];
-    dd($mahasiswaData, $user);
-    // $mahasiswa->update($mahasiswaData);
+    $mahasiswa->update([
+      'nim' => $data['nim'],
+      'nama' => $data['nama'],
+      'alamat' => $data['alamat'],
+      'jenis_kelamin' => $data['jenis_kelamin'],
+      'tanggal_lahir' => $data['tanggal_lahir'],
+    ]);
 
     return redirect()->route('dashboard.mahasiswa.index');
   }
@@ -143,8 +144,11 @@ class MahasiswaController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy(Mahasiswa $mahasiswa)
   {
-      //
+    $user_id = User::find($mahasiswa->user_id);
+    $user_id->delete();
+    $mahasiswa->delete();
+    return redirect()->route('dashboard.mahasiswa.index');
   }
 }

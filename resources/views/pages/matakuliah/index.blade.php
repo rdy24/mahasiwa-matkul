@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Data Mahasiswa 
+Data Mata Kuliah 
 @endsection
 
 @push('css-libraries')
@@ -11,10 +11,10 @@ Data Mahasiswa
 
 @section('content')
 <div class="section-header">
-  <h1>Data Mahasiswa</h1>
+  <h1>Data Matakuliah</h1>
   <div class="section-header-breadcrumb">
     <div class="breadcrumb-item active"><a href="{{ route('dashboard.') }}">Dashboard</a></div>
-    <div class="breadcrumb-item">Data Mahasiswa</div>
+    <div class="breadcrumb-item">Data Matakuliah</div>
   </div>
 </div>
 
@@ -23,7 +23,7 @@ Data Mahasiswa
     <div class="col-12">
       <div class="card">
         <div class="card-body d-flex justify-content-between">
-          <a href="{{ route('dashboard.mahasiswa.create') }}" class="btn btn-primary"><i class="fas fa-plus"
+          <a href="{{ route('dashboard.matkul.create') }}" class="btn btn-primary"><i class="fas fa-plus"
               aria-hidden="true"></i> Tambah Data</a>
           <a href="" class="btn btn-dark"><i class="fas fa-file-pdf"
               aria-hidden="true"></i> Cetak PDF</a>
@@ -34,25 +34,25 @@ Data Mahasiswa
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Nim</th>
-                  <th>Nama</th>
-                  <th>Jenis Kelamin</th>
+                  <th>Kode MK</th>
+                  <th>Mata Kuliah</th>
+                  <th>SKS</th>
+                  <th>Semester</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                @forelse ($mahasiswa as $data)
+                @forelse ($matakuliah as $matkul)
                 <tr>
                   <td>{{ $loop->iteration }}</td>
-                  <td>{{ $data->nim }}</td>
-                  <td>{{ $data->nama }}</td>
-                  <td>{{ $data->jenis_kelamin }}</td>
+                  <td>{{ $matkul->kode_mk }}</td>
+                  <td>{{ $matkul->nama_mk }}</td>
+                  <td>{{ $matkul->sks }}</td>
+                  <td>{{ $matkul->semester }}</td>
                   <td>
-                    <a href="{{ route('dashboard.mahasiswa.edit', $data->id) }}" class="btn btn-warning"><i
+                    <a href="{{ route('dashboard.matkul.edit', $matkul->id) }}" class="btn btn-warning"><i
                         class="fa fa-pen" aria-hidden="true"></i></a>
-                    <a href="{{ route('dashboard.mahasiswa.show', $data->id) }}" class="btn btn-info"><i
-                        class="fa fa-eye" aria-hidden="true"></i></a>
-                    <form action="{{ route('dashboard.mahasiswa.destroy', $data->id) }}" method="POST"
+                    <form action="{{ route('dashboard.matkul.destroy', $matkul->id) }}" method="POST"
                       class="d-inline">
                       @csrf
                       @method('delete')

@@ -11,7 +11,7 @@ Edit Data Mahasiswa
 
 @section('content')
 <div class="section-header">
-  <h1>Tambah Data Mahasiswa</h1>
+  <h1>Edit Data Mahasiswa</h1>
   <div class="section-header-breadcrumb">
     <div class="breadcrumb-item"><a href="#">Dashboard</a></div>
     <div class="breadcrumb-item"><a href="#">Data Mahasiswa</a></div>
