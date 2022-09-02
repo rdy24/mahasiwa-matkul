@@ -17,6 +17,11 @@ Route::get('/', function () {
     return view('pages.auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('pages.dashboard');
+
+
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
+    Route::get('/', function () {
+        return view('pages.dashboard');
+    });
+    Route::resource('mahasiswa', 'MahasiswaController');
 });
