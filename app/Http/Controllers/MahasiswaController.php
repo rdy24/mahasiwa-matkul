@@ -6,6 +6,7 @@ use App\Http\Requests\MahasiswaRequest;
 use App\Models\Mahasiswa;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class MahasiswaController extends Controller
@@ -39,12 +40,20 @@ class MahasiswaController extends Controller
    */
   public function store(MahasiswaRequest $request)
   {
+    $existEmail = User::where('email', $request->email)->first();
+    
     $data = $request->all();
 
-    $user = new User();
-    $user->email = $data['email'];
-    $user->password = Hash::make($data['password']);
-    $user->save();
+    if(!$existEmail) {
+      $this->validate($request, [
+        'email' => 'unique:users'
+      ]);
+      $user = new User();
+      $user->email = $data['email'];
+      $user->password = Hash::make($data['password']);
+      $user->save();  
+    }
+
 
     $user_id = User::where('email', $data['email'])->first()->id;
     $mahasiswa = new Mahasiswa();
@@ -77,9 +86,9 @@ class MahasiswaController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function edit(Mahasiswa $mahasiswa)
   {
-      //
+    return view('pages.mahasiswa.edit', compact('mahasiswa'));
   }
 
   /**
@@ -89,9 +98,43 @@ class MahasiswaController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(Request $request, Mahasiswa $mahasiswa)
   {
-      //
+    $user_id = User::find($mahasiswa->user_id);
+
+    if($request->email != $user_id->email) {
+      $this->validate($request, [
+        'email' => 'unique:users'
+      ]);
+    }
+
+    if($request->password != '') {
+      $this->validate($request, [
+          'password' => 'required|min:6',
+      ]);
+    }
+
+    $user = new User();
+    $user->email = $data['email'];
+    $user->password = Hash::make($data['password']);
+    // $user_id->update($user); 
+
+    if($request->nim != $mahasiswa->nim) {
+      $this->validate($request, [
+        'nim' => 'unique:mahasiswa'
+      ]);
+    }
+
+    $mahasiswaData = new Mahasiswa();
+    $mahasiswaData->nim = $data['nim'];
+    $mahasiswaData->nama = $data['nama'];
+    $mahasiswaData->alamat = $data['alamat'];
+    $mahasiswaData->jenis_kelamin = $data['jenis_kelamin'];
+    $mahasiswaData->tanggal_lahir = $data['tanggal_lahir'];
+    dd($mahasiswaData, $user);
+    // $mahasiswa->update($mahasiswaData);
+
+    return redirect()->route('dashboard.mahasiswa.index');
   }
 
   /**

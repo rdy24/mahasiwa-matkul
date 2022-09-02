@@ -48,7 +48,7 @@ Data Mahasiswa
                   <td>{{ $data->nama }}</td>
                   <td>{{ $data->jenis_kelamin }}</td>
                   <td>
-                    <a href="" class="btn btn-warning"><i
+                    <a href="{{ route('dashboard.mahasiswa.edit', $data->id) }}" class="btn btn-warning"><i
                         class="fa fa-pen" aria-hidden="true"></i></a>
                     <a href="{{ route('dashboard.mahasiswa.show', $data->id) }}" class="btn btn-info"><i
                         class="fa fa-eye" aria-hidden="true"></i></a>

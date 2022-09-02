@@ -43,7 +43,7 @@ Data Mahasiswa
               </tr>
               <tr>
                 <th>Tanggal Lahir</th>
-                <td>{{ $mahasiswa->tanggal_lahir }}</td>
+                <td>{{ date('d-m-Y', strtotime($mahasiswa->tanggal_lahir)) }}</td>
               </tr>
               <tr>
                 <th>Alamat</th>

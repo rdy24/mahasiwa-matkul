@@ -24,13 +24,11 @@ class MahasiswaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nim' => 'required|numeric|unique:mahasiswa,nim',
+            'nim' => 'required|numeric',
             'nama' => 'required|string',
             'alamat' => 'required|string',
             'jenis_kelamin' => 'required|string',
             'tanggal_lahir' => 'required|date',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6',
         ];
     }
 }
