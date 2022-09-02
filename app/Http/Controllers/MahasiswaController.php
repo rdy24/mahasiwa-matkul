@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MahasiswaRequest;
 use App\Models\Mahasiswa;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -37,25 +36,28 @@ class MahasiswaController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(MahasiswaRequest $request)
+  public function store(Request $request)
   {
-    $data = $request->all();
+    $user = $this->validate($request, [
+      'email' => 'required|email|unique:users',
+      'password' => 'required|min:6',
+    ]);
 
-    $user = new User();
-    $user->email = $data['email'];
-    $user->password = Hash::make($data['password']);
-    $user->save();
+    $user['password'] = Hash::make($user['password']);
+    User::create($user);
 
-    $user_id = User::where('email', $data['email'])->first()->id;
-    $mahasiswa = new Mahasiswa();
-    $mahasiswa->user_id = $user_id;
-    $mahasiswa->nim = $data['nim'];
-    $mahasiswa->nama = $data['nama'];
-    $mahasiswa->alamat = $data['alamat'];
-    $mahasiswa->jenis_kelamin = $data['jenis_kelamin'];
-    $mahasiswa->tanggal_lahir = $data['tanggal_lahir'];
-    $mahasiswa->save();
+    $mahasiswa = $this->validate($request, [
+      'user_id' => 'unique:mahasiswa|unique:users',
+      'nama' => 'required|string',
+      'nim' => 'required|numeric|unique:mahasiswa',
+      'tanggal_lahir' => 'required|date',
+      'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+      'alamat' => 'required|string',
+    ]);
 
+    $user_id = User::where('email', $user['email'])->first()->id;
+    $mahasiswa['user_id'] = $user_id;
+    Mahasiswa::create($mahasiswa);
     return redirect()->route('dashboard.mahasiswa.index');
 
   }
