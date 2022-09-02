@@ -7,6 +7,14 @@
       <a href="/dashboard">MP</a>
     </div>
     <ul class="sidebar-menu">
+      @can('is_mahasiswa')
+      <li class="menu-header">Dashboard</li>
+      <li class="{{ request()->routeIs('mahasiswa.show') ? 'active' : '' }}"><a href="{{ route('mahasiswa.show') }}" class="nav-link"><i
+            class="fas fa-fire"></i><span>Data Anda</span></a>
+      </li>
+      @endcan
+
+      @can('is_admin') 
       <li class="menu-header">Dashboard</li>
       <li class="{{ request()->routeIs('dashboard.') ? 'active' : '' }}"><a href="/dashboard" class="nav-link"><i
             class="fas fa-fire"></i><span>Dashboard</span></a>
@@ -18,6 +26,7 @@
       <li class="{{ request()->routeIs('dashboard.matkul.*') ? 'active' : '' }}"><a
           href="{{ route('dashboard.matkul.index') }}" class="nav-link"><i class="fas fa-book"></i><span>Data Mata Kuliah</span></a>
       </li>
+      @endcan
     </ul>
   </aside>
 </div>

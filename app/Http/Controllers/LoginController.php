@@ -22,7 +22,12 @@ class LoginController extends Controller
     if (Auth::attempt($credentials)) {
       $request->session()->regenerate();
 
-      return redirect()->intended('/dashboard');
+      if(Auth::user()->role === 'mahasiswa') {
+        return redirect()->route('mahasiswa.show');
+      }
+      
+      return redirect()->route('dashboard');
+
     }
 
     return back()->with('loginError', 'The provided credentials do not match our records.');

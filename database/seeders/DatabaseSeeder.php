@@ -21,5 +21,11 @@ class DatabaseSeeder extends Seeder
         Mahasiswa::factory(20)->create();
         MataKuliah::factory(30)->create();
         Krs::factory(50)->create();
+
+        User::create([
+            'email' => 'admin123@gmail.com',
+            'password' => bcrypt('password'),
+            'role' => 'admin',
+        ]);
     }
 }

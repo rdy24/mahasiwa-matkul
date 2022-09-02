@@ -1,27 +1,18 @@
 @extends('layouts.app')
 
 @section('title')
-Data Mahasiswa
+Data {{ $mahasiswa->nama }}
 @endsection
 
 @section('content')
 <div class="section-header">
-  <h1>Data Mahasiswa</h1>
-  <div class="section-header-breadcrumb">
-    <div class="breadcrumb-item active"><a href="/dashboard">Dashboard</a></div>
-    <div class="breadcrumb-item active"><a href="">Data Mahasiswa</a></div>
-    <div class="breadcrumb-item">Detail Data</div>
-  </div>
+  <h1>Data {{ $mahasiswa->nama }}</h1>
 </div>
 
 <div class="section-body">
   <div class="row">
     <div class="col-12">
       <div class="card">
-        <div class="card-body d-flex justify-content-between">
-          <a href="" class=" btn btn-dark"><i
-              class="fas fa-file-pdf" aria-hidden="true"></i> Cetak PDF</a>
-        </div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-bordered">

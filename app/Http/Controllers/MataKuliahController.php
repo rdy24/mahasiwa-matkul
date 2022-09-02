@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MataKuliahRequest;
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class MataKuliahController extends Controller
    */
   public function create()
   {
-      //
+    return view('pages.matakuliah.create');
   }
 
   /**
@@ -34,9 +35,15 @@ class MataKuliahController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(MataKuliahRequest $request)
   {
-      //
+    $this->validate($request, [
+      'kode_mk' => 'required|string|max:6|unique:mata_kuliah',
+    ]);
+
+    $data = $request->all();
+    MataKuliah::create($data);
+    return redirect()->route('dashboard.matkul.index');
   }
 
   /**
@@ -47,7 +54,7 @@ class MataKuliahController extends Controller
    */
   public function show($id)
   {
-      //
+    //
   }
 
   /**
@@ -56,9 +63,9 @@ class MataKuliahController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function edit(MataKuliah $matkul)
   {
-      //
+    return view('pages.matakuliah.edit', compact('matkul'));
   }
 
   /**
@@ -68,9 +75,17 @@ class MataKuliahController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(MataKuliahRequest $request, MataKuliah $matkul)
   {
-      //
+    if($request->kode_mk != $matkul->kode_mk) {
+      $this->validate($request, [
+        'kode_mk' => 'required|string|max:6|unique:mata_kuliah',
+      ]);
+    }
+
+    $data = $request->all();
+    $matkul->update($data);
+    return redirect()->route('dashboard.matkul.index');
   }
 
   /**
@@ -79,8 +94,9 @@ class MataKuliahController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-  public function destroy($id)
+  public function destroy(MataKuliah $matkul)
   {
-      //
+    $matkul->delete();
+    return redirect()->route('dashboard.matkul.index');
   }
 }

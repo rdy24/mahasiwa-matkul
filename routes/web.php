@@ -3,6 +3,8 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MataKuliahController;
+use App\Http\Controllers\ShowMahasiswaController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,10 +28,13 @@ Route::middleware('guest')->group(function () {
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => 'admin'], function () {
     Route::get('/', function () {
         return view('pages.dashboard');
     });
     Route::resource('mahasiswa', MahasiswaController::class);
     Route::resource('matkul', MataKuliahController::class);
+});
+Route::prefix('dashboard')->middleware('mahasiswa')->group(function () {
+    Route::get('/data', [ShowMahasiswaController::class, 'show'])->name('mahasiswa.show');
 });
