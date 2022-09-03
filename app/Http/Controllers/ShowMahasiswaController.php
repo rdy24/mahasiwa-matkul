@@ -12,7 +12,7 @@ class ShowMahasiswaController extends Controller
   {
     $this->authorize('is_mahasiswa');
 
-    $mahasiswa = Mahasiswa::find(Auth::user()->mahasiswa->id);
+    $mahasiswa = Mahasiswa::where('user_id', Auth::user()->id)->first();
     return view('pages.mahasiswa.show-mahasiswa', compact('mahasiswa'));
   }
 }
