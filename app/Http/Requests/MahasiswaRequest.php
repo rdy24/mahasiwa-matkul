@@ -24,7 +24,7 @@ class MahasiswaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nim' => 'required|numeric',
+            'nim' => 'required|string|max:10',
             'nama' => 'required|string',
             'alamat' => 'required|string',
             'jenis_kelamin' => 'required|string',

@@ -42,6 +42,7 @@ class MahasiswaController extends Controller
     $existEmail = User::where('email', $request->email)->first();
     
     $data = $request->all();
+    $username = explode('@', $data['email']);
 
     if(!$existEmail) {
       $this->validate($request, [
@@ -51,6 +52,7 @@ class MahasiswaController extends Controller
       $user = new User();
       $user->email = $data['email'];
       $user->password = Hash::make($data['password']);
+      $user->username = $username[0];
       $user->save();  
     }
 
@@ -65,7 +67,7 @@ class MahasiswaController extends Controller
     $mahasiswa->tanggal_lahir = $data['tanggal_lahir'];
     $mahasiswa->save();
 
-    return redirect()->route('dashboard.mahasiswa.index');
+    return redirect()->route('dashboard.mahasiswa.index')->with('success', 'Data Mahasiswa Berhasil Ditambahkan');
 
   }
 
@@ -116,9 +118,12 @@ class MahasiswaController extends Controller
       $user_id->password = Hash::make($data['password']);
     }
 
+    $username = explode(' ', $data['nama']);
+
     $user_id->update([
       'email' => $data['email'],
-      'password' => $user_id->password
+      'password' => $user_id->password,
+      'username' => $username[0],
     ]); 
 
     if($request->nim != $mahasiswa->nim) {
@@ -135,7 +140,7 @@ class MahasiswaController extends Controller
       'tanggal_lahir' => $data['tanggal_lahir'],
     ]);
 
-    return redirect()->route('dashboard.mahasiswa.index');
+    return redirect()->route('dashboard.mahasiswa.index')->with('success', 'Data Mahasiswa Berhasil Diubah');
   }
 
   /**
@@ -149,7 +154,7 @@ class MahasiswaController extends Controller
     $user_id = User::find($mahasiswa->user_id);
     $user_id->delete();
     $mahasiswa->delete();
-    return redirect()->route('dashboard.mahasiswa.index');
+    return redirect()->route('dashboard.mahasiswa.index')->with('success', 'Data Mahasiswa Berhasil Dihapus');
   }
 
   public function print()

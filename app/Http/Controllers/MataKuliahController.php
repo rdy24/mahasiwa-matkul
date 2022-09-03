@@ -43,7 +43,7 @@ class MataKuliahController extends Controller
 
     $data = $request->all();
     MataKuliah::create($data);
-    return redirect()->route('dashboard.matkul.index');
+    return redirect()->route('dashboard.matkul.index')->with('success', 'Data Mata Kuliah berhasil ditambahkan');
   }
 
   /**
@@ -85,7 +85,7 @@ class MataKuliahController extends Controller
 
     $data = $request->all();
     $matkul->update($data);
-    return redirect()->route('dashboard.matkul.index');
+    return redirect()->route('dashboard.matkul.index')->with('success', 'Data Mata Kuliah berhasil diubah');
   }
 
   /**
@@ -97,6 +97,6 @@ class MataKuliahController extends Controller
   public function destroy(MataKuliah $matkul)
   {
     $matkul->delete();
-    return redirect()->route('dashboard.matkul.index');
+    return redirect()->route('dashboard.matkul.index')->with('success', 'Data Mata Kuliah berhasil dihapus');
   }
 }

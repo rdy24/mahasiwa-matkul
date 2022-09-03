@@ -104,7 +104,7 @@ Edit Data Mahasiswa
               </p>
               @enderror
             </div>
-            <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="submit" class="btn btn-primary">Ubah</button>
           </form>
         </div>
       </div>

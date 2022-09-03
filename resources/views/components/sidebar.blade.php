@@ -10,7 +10,7 @@
       @can('is_mahasiswa')
       <li class="menu-header">Dashboard</li>
       <li class="{{ request()->routeIs('mahasiswa.show') ? 'active' : '' }}"><a href="{{ route('mahasiswa.show') }}" class="nav-link"><i
-            class="fas fa-fire"></i><span>Data Anda</span></a>
+            class="fas fa-user"></i><span>Data Anda</span></a>
       </li>
       @endcan
 

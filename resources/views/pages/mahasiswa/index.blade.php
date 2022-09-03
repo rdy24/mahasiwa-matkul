@@ -87,7 +87,7 @@ Data Mahasiswa
 <script src={{ asset("assets/js/page/modules-datatables.js") }}></script>
 @endpush
 
-{{-- @push('alert-js')
+@push('alert-js')
 <script>
   $(".btn-delete").click(function(e) {
     var form = $(this).closest("form");
@@ -109,4 +109,4 @@ Data Mahasiswa
     });
   });
 </script>
-@endpush --}}
+@endpush

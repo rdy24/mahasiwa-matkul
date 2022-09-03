@@ -32,7 +32,7 @@
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
-          {{-- @include('sweetalert::alert') --}}
+          @include('sweetalert::alert')
           @yield('content')
         </section>
       </div>
