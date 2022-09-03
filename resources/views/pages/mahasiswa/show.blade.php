@@ -19,7 +19,7 @@ Data Mahasiswa
     <div class="col-12">
       <div class="card">
         <div class="card-body d-flex justify-content-between">
-          <a href="" class=" btn btn-dark"><i
+          <a href="{{ route('dashboard.mahasiswa.print.detail', $mahasiswa->id) }}" class=" btn btn-dark"><i
               class="fas fa-file-pdf" aria-hidden="true"></i> Cetak PDF</a>
         </div>
         <div class="card-body">

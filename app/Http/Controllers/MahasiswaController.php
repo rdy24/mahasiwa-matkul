@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MahasiswaRequest;
 use App\Models\Mahasiswa;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Hash;
 
 class MahasiswaController extends Controller
@@ -103,22 +102,23 @@ class MahasiswaController extends Controller
   {
     $data = $request->all();
     $user_id = User::find($mahasiswa->user_id);
-
+    
     if($request->email != $user_id->email) {
       $this->validate($request, [
         'email' => 'unique:users'
       ]);
     }
-
+    
     if($request->password != '') {
       $this->validate($request, [
-          'password' => 'required|min:6',
+        'password' => 'required|min:6',
       ]);
+      $user_id->password = Hash::make($data['password']);
     }
 
     $user_id->update([
       'email' => $data['email'],
-      'password' => Hash::make($data['password'])
+      'password' => $user_id->password
     ]); 
 
     if($request->nim != $mahasiswa->nim) {
@@ -150,5 +150,19 @@ class MahasiswaController extends Controller
     $user_id->delete();
     $mahasiswa->delete();
     return redirect()->route('dashboard.mahasiswa.index');
+  }
+
+  public function print()
+  {
+    $mahasiswa = Mahasiswa::all();
+    $pdf = Pdf::loadView('pages.mahasiswa.print', compact('mahasiswa'));
+    return $pdf->download('Data-Mahasiswa.pdf');
+  }
+
+  public function print_detail(Mahasiswa $mahasiswa)
+  {
+    $nim = $mahasiswa->nim;
+    $pdf = Pdf::loadView('pages.mahasiswa.print-detail', compact('mahasiswa'));
+    return $pdf->download('Data-Mahasiswa-'. $nim .'.pdf');
   }
 }

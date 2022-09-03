@@ -13,14 +13,14 @@ Dashboard | {{ config('app.name') }}
     <div class="col-lg-3 col-md-6 col-sm-6 col-12">
       <div class="card card-statistic-1">
         <div class="card-icon bg-primary">
-          <i class="fas fa-plane-arrival"></i>
+          <i class="fas fa-user"></i>
         </div>
         <div class="card-wrap">
           <div class="card-header">
-            <h4>Bandara</h4>
+            <h4>Mahasiswa</h4>
           </div>
           <div class="card-body">
-            45354
+            {{ $mahasiswa }}
           </div>
         </div>
       </div>
@@ -28,29 +28,14 @@ Dashboard | {{ config('app.name') }}
     <div class="col-lg-3 col-md-6 col-sm-6 col-12">
       <div class="card card-statistic-1">
         <div class="card-icon bg-danger">
-          <i class="fas fa-route"></i>
+          <i class="fas fa-book"></i>
         </div>
         <div class="card-wrap">
           <div class="card-header">
-            <h4>Rute</h4>
+            <h4>Mata Kuliah</h4>
           </div>
           <div class="card-body">
-            22
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-      <div class="card card-statistic-1">
-        <div class="card-icon bg-warning">
-          <i class="fas fa-paper-plane"></i>
-        </div>
-        <div class="card-wrap">
-          <div class="card-header">
-            <h4>Maskapai</h4>
-          </div>
-          <div class="card-body">
-            43545
+            {{ $matakuliah }}
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MataKuliahController;
@@ -29,9 +30,9 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => 'admin'], function () {
-    Route::get('/', function () {
-        return view('pages.dashboard');
-    });
+    Route::get('/', [DashboardController::class, 'index']);
+    Route::get('mahasiswa/print', [MahasiswaController::class, 'print'])->name('mahasiswa.print');
+    Route::get('mahasiswa/print/{mahasiswa}', [MahasiswaController::class, 'print_detail'])->name('mahasiswa.print.detail');
     Route::resource('mahasiswa', MahasiswaController::class);
     Route::resource('matkul', MataKuliahController::class);
 });
