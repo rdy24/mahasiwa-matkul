@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MataKuliahRequest;
 use App\Models\MataKuliah;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class MataKuliahController extends Controller
@@ -98,5 +99,12 @@ class MataKuliahController extends Controller
   {
     $matkul->delete();
     return redirect()->route('dashboard.matkul.index')->with('success', 'Data Mata Kuliah berhasil dihapus');
+  }
+
+  public function print()
+  {
+    $matakuliah = MataKuliah::all();
+    $pdf = Pdf::loadView('pages.matakuliah.print', compact('matakuliah'));
+    return $pdf->download('Data-Matkul.pdf');
   }
 }

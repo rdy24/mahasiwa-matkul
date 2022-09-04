@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
 use App\Models\MataKuliah;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,6 +13,7 @@ class DashboardController extends Controller
   {
     $mahasiswa = Mahasiswa::count();
     $matakuliah = MataKuliah::count();
-    return view('pages.dashboard', compact('mahasiswa', 'matakuliah'));
+    $admin = User::where('role', 'admin')->count();
+    return view('pages.dashboard', compact('mahasiswa', 'matakuliah', 'admin'));
   }
 }

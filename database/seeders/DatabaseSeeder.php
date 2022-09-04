@@ -23,9 +23,15 @@ class DatabaseSeeder extends Seeder
         Krs::factory(50)->create();
 
         User::create([
-            'email' => 'admin123@gmail.com',
-            'username' => 'admin123',
-            'password' => bcrypt('password'),
+            'email' => 'admin@gmail.com',
+            'username' => 'admin',
+            'password' => bcrypt('12345678'),
+            'role' => 'admin',
+        ]);
+        User::create([
+            'email' => 'admin1@gmail.com',
+            'username' => 'admin1',
+            'password' => bcrypt('12345678'),
             'role' => 'admin',
         ]);
     }

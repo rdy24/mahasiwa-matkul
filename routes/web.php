@@ -34,6 +34,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => 'ad
     Route::get('mahasiswa/print', [MahasiswaController::class, 'print'])->name('mahasiswa.print');
     Route::get('mahasiswa/print/{mahasiswa}', [MahasiswaController::class, 'print_detail'])->name('mahasiswa.print.detail');
     Route::resource('mahasiswa', MahasiswaController::class);
+
+    Route::get('matkul/print', [MataKuliahController::class, 'print'])->name('matkul.print');
     Route::resource('matkul', MataKuliahController::class);
 });
 Route::prefix('dashboard')->middleware('mahasiswa')->group(function () {
