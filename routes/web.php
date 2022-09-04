@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KrsController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MataKuliahController;
@@ -35,6 +36,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => 'ad
     Route::get('mahasiswa/print/{mahasiswa}', [MahasiswaController::class, 'print_detail'])->name('mahasiswa.print.detail');
     Route::resource('mahasiswa', MahasiswaController::class);
     Route::resource('matkul', MataKuliahController::class);
+    Route::resource('krs', KrsController::class);
 });
 Route::prefix('dashboard')->middleware('mahasiswa')->group(function () {
     Route::get('/data', [ShowMahasiswaController::class, 'show'])->name('mahasiswa.show');

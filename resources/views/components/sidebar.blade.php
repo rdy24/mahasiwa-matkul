@@ -26,6 +26,9 @@
       <li class="{{ request()->routeIs('dashboard.matkul.*') ? 'active' : '' }}"><a
           href="{{ route('dashboard.matkul.index') }}" class="nav-link"><i class="fas fa-book"></i><span>Data Mata Kuliah</span></a>
       </li>
+      <li class="{{ request()->routeIs('dashboard.krs.*') ? 'active' : '' }}"><a
+          href="{{ route('dashboard.krs.index') }}" class="nav-link"><i class="fas fa-book-open"></i><span>Data KRS</span></a>
+      </li>
       @endcan
     </ul>
   </aside>
