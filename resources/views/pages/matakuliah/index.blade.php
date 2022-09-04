@@ -25,7 +25,7 @@ Data Mata Kuliah
         <div class="card-body d-flex justify-content-between">
           <a href="{{ route('dashboard.matkul.create') }}" class="btn btn-primary"><i class="fas fa-plus"
               aria-hidden="true"></i> Tambah Data</a>
-          <a href="" class="btn btn-dark"><i class="fas fa-file-pdf"
+          <a href="{{ route('dashboard.matkul.print') }}" class="btn btn-dark"><i class="fas fa-file-pdf"
               aria-hidden="true"></i> Cetak PDF</a>
         </div>
         <div class="card-body">

@@ -38,8 +38,8 @@
 
               <div class="card-body">
                 <p>Akun untuk demo :</p>
-                <p>email : admin123@gmail.com</p>
-                <p>password : password</p>
+                <p>email : admin@gmail.com</p>
+                <p>password : 12345678</p>
                 @if ($message = Session::get('loginError'))
                 <p class="text-danger">
                   {{ $message }}

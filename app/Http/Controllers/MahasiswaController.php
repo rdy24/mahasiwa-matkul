@@ -17,7 +17,7 @@ class MahasiswaController extends Controller
    */
   public function index()
   {
-    $mahasiswa = Mahasiswa::all();
+    $mahasiswa = Mahasiswa::all()->sortBy('nama');
     return view('pages.mahasiswa.index', compact('mahasiswa'));
   }
 
@@ -106,8 +106,15 @@ class MahasiswaController extends Controller
     $user_id = User::find($mahasiswa->user_id);
     
     if($request->email != $user_id->email) {
+      $username = explode('@', $data['email']);
+      $user_id->username = $username[0];
       $this->validate($request, [
-        'email' => 'unique:users'
+        'email' => 'unique:users',
+        'username' => 'string'
+      ]);
+      $user_id->update([
+        'email' => $data['email'],
+        'username' => $user_id->username,
       ]);
     }
     
@@ -115,16 +122,10 @@ class MahasiswaController extends Controller
       $this->validate($request, [
         'password' => 'required|min:6',
       ]);
-      $user_id->password = Hash::make($data['password']);
+      $user_id->update([
+        'password' => Hash::make($data['password'])
+      ]); 
     }
-
-    $username = explode(' ', $data['nama']);
-
-    $user_id->update([
-      'email' => $data['email'],
-      'password' => $user_id->password,
-      'username' => $username[0],
-    ]); 
 
     if($request->nim != $mahasiswa->nim) {
       $this->validate($request, [
@@ -159,7 +160,7 @@ class MahasiswaController extends Controller
 
   public function print()
   {
-    $mahasiswa = Mahasiswa::all();
+    $mahasiswa = Mahasiswa::all()->sortBy('nama');
     $pdf = Pdf::loadView('pages.mahasiswa.print', compact('mahasiswa'));
     return $pdf->download('Data-Mahasiswa.pdf');
   }
