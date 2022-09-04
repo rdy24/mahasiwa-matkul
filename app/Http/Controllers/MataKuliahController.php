@@ -103,7 +103,7 @@ class MataKuliahController extends Controller
 
   public function print()
   {
-    $matakuliah = MataKuliah::all();
+    $matakuliah = MataKuliah::all()->sortBy('semester');
     $pdf = Pdf::loadView('pages.matakuliah.print', compact('matakuliah'));
     return $pdf->download('Data-Matkul.pdf');
   }

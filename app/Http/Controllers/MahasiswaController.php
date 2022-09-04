@@ -160,7 +160,7 @@ class MahasiswaController extends Controller
 
   public function print()
   {
-    $mahasiswa = Mahasiswa::all();
+    $mahasiswa = Mahasiswa::all()->sortBy('nama');
     $pdf = Pdf::loadView('pages.mahasiswa.print', compact('mahasiswa'));
     return $pdf->download('Data-Mahasiswa.pdf');
   }
