@@ -16,7 +16,7 @@ class MataKuliahController extends Controller
    */
   public function index()
   {
-    $matakuliah = MataKuliah::all();
+    $matakuliah = MataKuliah::all()->sortBy('semester');
     return view('pages.matakuliah.index', compact('matakuliah'));
   }
 
