@@ -17,7 +17,7 @@ class MahasiswaController extends Controller
    */
   public function index()
   {
-    $mahasiswa = Mahasiswa::all();
+    $mahasiswa = Mahasiswa::all()->sortBy('nama');
     return view('pages.mahasiswa.index', compact('mahasiswa'));
   }
 
