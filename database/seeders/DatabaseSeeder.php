@@ -34,5 +34,19 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'role' => 'admin',
         ]);
+        User::create([
+            'email' => 'mahasiswa@gmail.com',
+            'username' => 'mahasiswa',
+            'password' => bcrypt('12345678'),
+            'role' => 'mahasiswa',
+        ]);
+        Mahasiswa::create([
+            'user_id' => 24,
+            'nim' => '12345678',
+            'nama' => 'Mahasiswa',
+            'jenis_kelamin' => 'Laki-laki',
+            'alamat' => 'Jl. Jalan',
+            'tanggal_lahir' => '2000-01-01',
+        ]);
     }
 }
