@@ -16,8 +16,8 @@ class IsMahasiswa
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!auth()->check() || auth()->user()->role !== 'mahasiswa') {
-            abort(403);
+        if(auth()->user()->role !== 'mahasiswa') {
+            return redirect()->route('dashboard.');
         }
         return $next($request);
     }

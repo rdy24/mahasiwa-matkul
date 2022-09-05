@@ -30,7 +30,7 @@ Route::middleware('guest')->group(function () {
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => 'admin'], function () {
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/', [DashboardController::class, 'index']);
     Route::get('mahasiswa/print', [MahasiswaController::class, 'print'])->name('mahasiswa.print');
     Route::get('mahasiswa/print/{mahasiswa}', [MahasiswaController::class, 'print_detail'])->name('mahasiswa.print.detail');
@@ -39,9 +39,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => 'ad
     Route::get('matkul/print', [MataKuliahController::class, 'print'])->name('matkul.print');
     Route::resource('matkul', MataKuliahController::class);
 
-    Route::get('krs/{mata_kuliah_id}/{mahasiswa_id}/edit', [KrsController::class, 'edit'])->name('krs.edit.detail');
+    // Route::get('krs/{mata_kuliah_id}/{mahasiswa_id}/edit', [KrsController::class, 'edit'])->name('krs.edit.detail');
     Route::resource('krs', KrsController::class);
 });
-Route::prefix('dashboard')->middleware('mahasiswa')->group(function () {
+Route::prefix('dashboard')->middleware(['auth','mahasiswa'])->group(function () {
     Route::get('/data', [ShowMahasiswaController::class, 'show'])->name('mahasiswa.show');
 });
