@@ -39,7 +39,9 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::get('matkul/print', [MataKuliahController::class, 'print'])->name('matkul.print');
     Route::resource('matkul', MataKuliahController::class);
 
-    // Route::get('krs/{mata_kuliah_id}/{mahasiswa_id}/edit', [KrsController::class, 'edit'])->name('krs.edit.detail');
+    Route::get('krs/{mahasiswa_id}/create', [KrsController::class, 'create'])->name('krs.create.mahasiswa');
+    Route::post('krs/{mahasiswa_id}/store', [KrsController::class, 'store'])->name('krs.store.mahasiswa');
+    Route::get('krs/print/{id}', [KrsController::class, 'print'])->name('krs.print');
     Route::resource('krs', KrsController::class);
 });
 Route::prefix('dashboard')->middleware(['auth','mahasiswa'])->group(function () {

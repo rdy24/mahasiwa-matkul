@@ -11,10 +11,10 @@ Data Mahasiswa
 
 @section('content')
 <div class="section-header">
-  <h1>Data Mahasiswa</h1>
+  <h1>Data KRS Mahasiswa</h1>
   <div class="section-header-breadcrumb">
     <div class="breadcrumb-item active"><a href="/dashboard">Dashboard</a></div>
-    <div class="breadcrumb-item">Data Mahasiswa</div>
+    <div class="breadcrumb-item">Data KRS Mahasiswa</div>
   </div>
 </div>
 
@@ -22,12 +22,6 @@ Data Mahasiswa
   <div class="row">
     <div class="col-12">
       <div class="card">
-        <div class="card-body d-flex justify-content-between">
-          <a href="{{ route('dashboard.krs.create') }}" class="btn btn-primary"><i class="fas fa-plus"
-              aria-hidden="true"></i> Tambah Data</a>
-          <a href="{{ route('dashboard.mahasiswa.print') }}" class="btn btn-dark"><i class="fas fa-file-pdf"
-              aria-hidden="true"></i> Cetak PDF</a>
-        </div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-striped" id="table-1">

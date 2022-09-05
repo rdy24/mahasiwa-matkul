@@ -7,6 +7,7 @@ use App\Models\Mahasiswa;
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class KrsController extends Controller
 {
@@ -26,9 +27,9 @@ class KrsController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function create()
+  public function create($id)
   {
-    $mahasiswa = Mahasiswa::all();
+    $mahasiswa = Mahasiswa::find($id);
     $matakuliah = MataKuliah::all()->sortBy('semester');
     return view('pages.krs.create', compact('mahasiswa', 'matakuliah'));
   }
@@ -39,16 +40,20 @@ class KrsController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(Request $request, $id)
   {
+    $mahasiswa = Mahasiswa::find($id);
     $this->validate($request, [
-      'mahasiswa_id' => ['required', Rule::unique('krs')->where('mata_kuliah_id', $request->mata_kuliah_id)],
-      'mata_kuliah_id' => ['required', Rule::unique('krs')->where('mahasiswa_id', $request->mahasiswa_id)],
+      'mata_kuliah_id' => ['required', Rule::unique('krs')->where('mahasiswa_id', $mahasiswa->id)],
+    ], [
+      'mata_kuliah_id.unique' => 'Mata kuliah sudah diambil oleh mahasiswa ini',
     ]);
 
-    $data = $request->all();
-    Krs::Create($data);
-    return redirect()->route('dashboard.krs.index')->with('success', 'Data KRS Berhasil Ditambahkan'); 
+    Krs::Create([
+      'mahasiswa_id' => $mahasiswa->id,
+      'mata_kuliah_id' => $request->mata_kuliah_id,
+    ]);
+    return redirect()->route('dashboard.krs.show', $mahasiswa->id)->with('success', 'Data KRS Berhasil Ditambahkan'); 
   }
 
   /**
@@ -61,7 +66,7 @@ class KrsController extends Controller
   {
     $mahasiswa = Mahasiswa::find($id);
     $krs = Krs::where('mahasiswa_id', $id)->get();
-    return view('pages.krs.show', compact('mahasiswa', 'krs'));
+    return view('pages.krs.show', compact('mahasiswa','krs'));
   }
 
   /**
@@ -70,10 +75,9 @@ class KrsController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function edit($id, $mahasiswa_id)
+  public function edit($id)
   {
-    $krs = Krs::where('mata_kuliah_id', $id)->where('mahasiswa_id', $mahasiswa_id)->first();
-    dd($krs->mata_kuliah_id);
+    $krs = Krs::find($id);
     $matakuliah = MataKuliah::all()->sortBy('semester');
     return view('pages.krs.edit', compact('matakuliah', 'krs'));
   }
@@ -87,7 +91,19 @@ class KrsController extends Controller
    */
   public function update(Request $request, $id)
   {
-      //
+    $krs = Krs::find($id);
+    if($request->mata_kuliah_id != $krs->mata_kuliah_id) {
+      $this->validate($request, [
+        'mata_kuliah_id' => ['required',  Rule::unique('krs')->where('mahasiswa_id', $krs->mahasiswa_id)],
+      ], [
+        'mata_kuliah_id.unique' => 'Mata Kuliah Sudah Diambil'
+      ]);
+    }
+    $krs->update([
+      'mahasiswa_id' => $krs->mahasiswa_id,
+      'mata_kuliah_id' => $request->mata_kuliah_id,
+    ]);
+    return redirect()->route('dashboard.krs.show', $krs->mahasiswa_id)->with('success', 'Data KRS Berhasil Diubah');
   }
 
   /**
@@ -98,6 +114,17 @@ class KrsController extends Controller
    */
   public function destroy($id)
   {
-      //
+    $krs = Krs::find($id);
+    $krs->delete();
+    return redirect()->route('dashboard.krs.show', $krs->mahasiswa_id)->with('success', 'Data KRS Berhasil Dihapus');
+  }
+
+  public function print($id)
+  {
+    $mahasiswa = Mahasiswa::find($id);
+    $nim = $mahasiswa->nim;
+    $krs = Krs::where('mahasiswa_id', $id)->get();
+    $pdf = Pdf::loadView('pages.krs.print', compact('mahasiswa','krs'));
+    return $pdf->download('Data-kRS-'. $nim .'.pdf');
   }
 }

@@ -32,7 +32,7 @@ Edit Data KRS
               <label for="mata_kuliah_id">Mata Kuliah</label>
               <select name="mata_kuliah_id" required class="form-control select2">
                 @foreach ($matakuliah as $matkul)
-                <option value="{{ $matkul->id }}" {{ old('mata_kuliah_id')==$krs->mata_kuliah_id ? 'selected' : '' }}>
+                <option value="{{ $matkul->id }}" {{ old('mata_kuliah_id', $matkul->id)==$krs->mata_kuliah_id ? 'selected' : '' }}>
                   {{ $matkul->kode_mk }} - {{ $matkul->nama_mk }} - {{ $matkul->sks }} sks - Semester {{ $matkul->semester }}
                 </option>
                 @endforeach

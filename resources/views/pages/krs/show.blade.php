@@ -23,8 +23,11 @@ Data KRS
     <div class="col-12">
       <div class="card">
         <div class="card-body d-flex justify-content-between">
-          <a href="{{ route('dashboard.krs.index') }}" class="btn btn-info"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>
-          <a href="{{ route('dashboard.mahasiswa.print') }}" class="btn btn-dark"><i class="fas fa-file-pdf" aria-hidden="true"></i> Cetak PDF</a>
+          <div>
+            <a href="{{ route('dashboard.krs.index') }}" class="btn btn-info"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>
+            <a href="{{ route('dashboard.krs.create.mahasiswa', $mahasiswa->id) }}" class="btn btn-primary"><i class="fas fa-plus" aria-hidden="true"></i> Tambah Data</a>
+          </div>
+          <a href="{{ route('dashboard.krs.print', $mahasiswa->id) }}" class="btn btn-dark"><i class="fas fa-file-pdf" aria-hidden="true"></i> Cetak PDF</a>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -43,14 +46,14 @@ Data KRS
                 @forelse ($krs as $data)
                 <tr>
                   <td>{{ $loop->iteration }}</td>
-                  <td>{{ $data->mata_kuliah->kode_mk }}</td>
-                  <td>{{ $data->mata_kuliah->nama_mk }}</td>
-                  <td>{{ $data->mata_kuliah->sks }}</td>
-                  <td>{{ $data->mata_kuliah->semester }}</td>
+                  <td>{{ $data->mata_kuliah->kode_mk ?? '' }}</td>
+                  <td>{{ $data->mata_kuliah->nama_mk ?? '' }}</td>
+                  <td>{{ $data->mata_kuliah->sks ?? '' }}</td>
+                  <td>{{ $data->mata_kuliah->semester ?? '' }}</td>
                   <td>
-                    <a href="{{ route('dashboard.krs.edit.detail', [$data->mata_kuliah->id,  $data->mahasiswa->id]) }}" class="btn btn-warning"><i
+                    <a href="{{ route('dashboard.krs.edit', $data->id) }}" class="btn btn-warning"><i
                         class="fa fa-pen" aria-hidden="true"></i></a>
-                    <form action="{{ route('dashboard.mahasiswa.destroy', $data->id) }}" method="POST"
+                    <form action="{{ route('dashboard.krs.destroy', $data->id) }}" method="POST"
                       class="d-inline">
                       @csrf
                       @method('delete')
@@ -61,7 +64,7 @@ Data KRS
                 </tr>
                 @empty
                 <tr>
-                  <td colspan="5" class="text-center">Tidak ada data</td>
+                  <td colspan="6" class="text-center">Tidak ada data</td>
                 </tr>
                 @endforelse
               </tbody>

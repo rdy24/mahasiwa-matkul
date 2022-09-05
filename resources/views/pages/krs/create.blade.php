@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Tambah Data KRS
+Tambah Data KRS {{ $mahasiswa->nama }}
 @endsection
 
 @push('css-libraries')
@@ -12,7 +12,7 @@ Tambah Data KRS
 
 @section('content')
 <div class="section-header">
-  <h1>Tambah Data KRS</h1>
+  <h1>Tambah Data KRS {{ $mahasiswa->nama }}</h1>
   <div class="section-header-breadcrumb">
     <div class="breadcrumb-item"><a href="#">Dashboard</a></div>
     <div class="breadcrumb-item"><a href="#">Data KRS</a></div>
@@ -25,23 +25,8 @@ Tambah Data KRS
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <form action="{{ route('dashboard.krs.store') }}" method="POST">
+          <form action="{{ route('dashboard.krs.store.mahasiswa', $mahasiswa->id) }}" method="POST">
             @csrf
-            <div class="form-group">
-              <label for="mahasiswa_id">Mahasiswa</label>
-              <select name="mahasiswa_id" required class="form-control select2">
-                @foreach ($mahasiswa as $data)
-                <option value="{{ $data->id }}" {{ old('mahasiswa_id')==$data->id ? 'selected' : '' }}>
-                  {{ $data->nim }} - {{ $data->nama }}
-                </option>
-                @endforeach
-              </select>
-              @error('mahasiswa_id')
-              <p class="text-danger">
-                {{ $message }}
-              </p>
-              @enderror
-            </div>
             <div class="form-group">
               <label for="mata_kuliah_id">Mata Kuliah</label>
               <select name="mata_kuliah_id" required class="form-control select2">
