@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'mahasiswa',
         ]);
         Mahasiswa::create([
-            'user_id' => 24,
+            'user_id' => 23,
             'nim' => '12345678',
             'nama' => 'Mahasiswa',
             'jenis_kelamin' => 'Laki-laki',

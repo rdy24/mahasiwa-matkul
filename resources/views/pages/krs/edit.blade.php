@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Edit Data KRS
+Edit Data KRS {{ $krs->mahasiswa->nama ?? ''}}
 @endsection
 
 @push('css-libraries')
@@ -12,7 +12,7 @@ Edit Data KRS
 
 @section('content')
 <div class="section-header">
-  <h1>Edit Data KRS</h1>
+  <h1>Edit Data KRS {{ $krs->mahasiswa->nama ?? ''}}</h1>
   <div class="section-header-breadcrumb">
     <div class="breadcrumb-item"><a href="#">Dashboard</a></div>
     <div class="breadcrumb-item"><a href="#">Data KRS</a></div>
