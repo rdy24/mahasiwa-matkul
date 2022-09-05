@@ -65,7 +65,7 @@ class KrsController extends Controller
   public function show($id)
   {
     $mahasiswa = Mahasiswa::find($id);
-    $krs = Krs::where('mahasiswa_id', $id)->get();
+    $krs = Krs::where('mahasiswa_id', $id)->get()->sortBy('created_at');
     return view('pages.krs.show', compact('mahasiswa','krs'));
   }
 
