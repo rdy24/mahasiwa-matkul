@@ -48,7 +48,7 @@ Data KRS
                   <td>{{ $data->mata_kuliah->sks }}</td>
                   <td>{{ $data->mata_kuliah->semester }}</td>
                   <td>
-                    <a href="{{ route('dashboard.krs.edit', $data->mata_kuliah->id) }}" class="btn btn-warning"><i
+                    <a href="{{ route('dashboard.krs.edit.detail', [$data->mata_kuliah->id,  $data->mahasiswa->id]) }}" class="btn btn-warning"><i
                         class="fa fa-pen" aria-hidden="true"></i></a>
                     <form action="{{ route('dashboard.mahasiswa.destroy', $data->id) }}" method="POST"
                       class="d-inline">

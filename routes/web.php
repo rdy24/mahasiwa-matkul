@@ -38,6 +38,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => 'ad
 
     Route::get('matkul/print', [MataKuliahController::class, 'print'])->name('matkul.print');
     Route::resource('matkul', MataKuliahController::class);
+
+    Route::get('krs/{mata_kuliah_id}/{mahasiswa_id}/edit', [KrsController::class, 'edit'])->name('krs.edit.detail');
     Route::resource('krs', KrsController::class);
 });
 Route::prefix('dashboard')->middleware('mahasiswa')->group(function () {

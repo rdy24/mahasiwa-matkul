@@ -17,7 +17,7 @@ class KrsController extends Controller
    */
   public function index()
   {
-    $mahasiswa = Mahasiswa::all();
+    $mahasiswa = Mahasiswa::all()->sortBy('nama');
     return view('pages.krs.index', compact('mahasiswa'));
   }
 
@@ -70,11 +70,11 @@ class KrsController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function edit($id, $mahasiswa_id)
   {
-    $krs = Krs::where('mata_kuliah_id', $id)->first();
+    $krs = Krs::where('mata_kuliah_id', $id)->where('mahasiswa_id', $mahasiswa_id)->first();
+    dd($krs->mata_kuliah_id);
     $matakuliah = MataKuliah::all()->sortBy('semester');
-    dd($krs);
     return view('pages.krs.edit', compact('matakuliah', 'krs'));
   }
 
